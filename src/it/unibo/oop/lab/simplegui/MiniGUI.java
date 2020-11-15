@@ -54,7 +54,9 @@ public class MiniGUI {
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                System.out.println(rng.nextInt());
+                int nRand = rng.nextInt();
+                System.out.println(nRand);
+                textField.setText(String.valueOf(nRand));
             }
         });
     }
