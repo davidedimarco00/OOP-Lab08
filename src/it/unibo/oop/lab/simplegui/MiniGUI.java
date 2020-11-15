@@ -13,6 +13,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * This class is a simple application that writes a random number on a file.
@@ -32,15 +33,20 @@ public class MiniGUI {
      * 
      */
     public MiniGUI() {
-        //final JPanel canvas = new JPanel();
+        final JPanel canvas = new JPanel();
         final JPanel canvas1 = new JPanel();
         
-       //canvas.setLayout(new BorderLayout());
+        canvas.setLayout(new BorderLayout());
         canvas1.setLayout(new BoxLayout(canvas1, BoxLayout.X_AXIS));
         
+        
+        canvas.add(canvas1, BorderLayout.CENTER);
+
         final JButton write = new JButton("Print a random number on standard output");
+        final JTextField textField = new JTextField("Result");
         canvas1.add(write, BorderLayout.CENTER);
-        frame.setContentPane(canvas1);
+        canvas.add(textField, BorderLayout.NORTH);
+        frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
          * Handlers
@@ -56,7 +62,8 @@ public class MiniGUI {
     private void display() {
         /*
          * Make the frame one fifth the resolution of the screen. This very method is
-         * enough for a single screen setup. In case of multiple monitors, the
+         * enough for a single screen setup. In case of multiple
+         *  monitors, the
          * primary is selected. In order to deal coherently with multimonitor
          * setups, other facilities exist (see the Java documentation about this
          * issue). It is MUCH better than manually specify the size of a window
