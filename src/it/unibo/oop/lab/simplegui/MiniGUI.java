@@ -5,12 +5,10 @@ package it.unibo.oop.lab.simplegui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -77,6 +75,7 @@ public class MiniGUI {
         /*
          * OK, ready to pull the frame onscreen
          */
+        frame.pack();
         frame.setVisible(true);
     }
 
