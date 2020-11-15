@@ -5,11 +5,13 @@ package it.unibo.oop.lab.simplegui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -32,11 +34,15 @@ public class MiniGUI {
      * 
      */
     public MiniGUI() {
-        final JPanel canvas = new JPanel();
-        canvas.setLayout(new BorderLayout());
+        //final JPanel canvas = new JPanel();
+        final JPanel canvas1 = new JPanel();
+        
+       //canvas.setLayout(new BorderLayout());
+        canvas1.setLayout(new BoxLayout(canvas1, BoxLayout.X_AXIS));
+        
         final JButton write = new JButton("Print a random number on standard output");
-        canvas.add(write, BorderLayout.CENTER);
-        frame.setContentPane(canvas);
+        canvas1.add(write, BorderLayout.CENTER);
+        frame.setContentPane(canvas1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
          * Handlers
