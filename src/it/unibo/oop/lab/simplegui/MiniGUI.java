@@ -28,20 +28,15 @@ public class MiniGUI {
     private static final int PROPORTION = 5;
     private final Random rng = new Random();
     private final JFrame frame = new JFrame(TITLE);
-
     /**
      * 
      */
     public MiniGUI() {
         final JPanel canvas = new JPanel();
         final JPanel canvas1 = new JPanel();
-        
         canvas.setLayout(new BorderLayout());
-        canvas1.setLayout(new BoxLayout(canvas1, BoxLayout.X_AXIS));
-        
-        
+        canvas1.setLayout(new BoxLayout(canvas1, BoxLayout.Y_AXIS));
         canvas.add(canvas1, BorderLayout.CENTER);
-
         final JButton write = new JButton("Print a random number on standard output");
         final JTextField textField = new JTextField("Result");
         canvas1.add(write, BorderLayout.CENTER);
@@ -54,7 +49,7 @@ public class MiniGUI {
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                int nRand = rng.nextInt();
+                final int nRand = rng.nextInt();
                 System.out.println(nRand);
                 textField.setText(String.valueOf(nRand));
             }
