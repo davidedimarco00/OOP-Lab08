@@ -42,7 +42,9 @@ public class BadIOGUI {
         canvas1.setLayout(new BoxLayout(canvas1, BoxLayout.X_AXIS));
         canvas.add(canvas1, BorderLayout.CENTER);
         final JButton write = new JButton("Write on file");
+        final JButton read = new JButton("Read on file");
         canvas1.add(write, BorderLayout.CENTER);
+        canvas1.add(read, BorderLayout.CENTER);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         /*
@@ -64,6 +66,14 @@ public class BadIOGUI {
                     JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
                     e1.printStackTrace();
                 }
+            }
+        });
+
+        read.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent arg0){
+                System.out.println("Tasto premuto");
+
             }
         });
     }
