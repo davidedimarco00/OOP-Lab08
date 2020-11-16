@@ -71,7 +71,7 @@ public class BadIOGUI {
 
         read.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(final ActionEvent arg0){
+            public void actionPerformed(final ActionEvent arg0) {
                 System.out.println("Tasto premuto");
 
             }
