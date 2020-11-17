@@ -6,7 +6,11 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Random;
 
 import javax.swing.BoxLayout;
@@ -41,6 +45,9 @@ public class BadIOGUI {
         canvas.setLayout(new BorderLayout());
         canvas1.setLayout(new BoxLayout(canvas1, BoxLayout.X_AXIS));
         canvas.add(canvas1, BorderLayout.CENTER);
+        /*
+         * aggiungo i bottoni
+         */
         final JButton write = new JButton("Write on file");
         final JButton read = new JButton("Read on file");
         canvas1.add(write, BorderLayout.CENTER);
@@ -61,7 +68,9 @@ public class BadIOGUI {
                  * your UI becomes completely unresponsive.
                  */
                 try (PrintStream ps = new PrintStream(PATH)) {
-                    ps.print(rng.nextInt());
+                    final int rnd = rng.nextInt();
+                    ps.print(rnd);
+                    System.out.println("SCRITTO: " + rnd);
                 } catch (FileNotFoundException e1) {
                     JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
                     e1.printStackTrace();
@@ -72,8 +81,12 @@ public class BadIOGUI {
         read.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent arg0) {
-                System.out.println("Tasto premuto");
-
+                try {
+                    System.out.println(Files.readAllLines(Path.of(PATH), Charset.defaultCharset()));
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(frame, e, "Error", JOptionPane.ERROR_MESSAGE);
+                    e.printStackTrace();
+                }
             }
         });
     }
