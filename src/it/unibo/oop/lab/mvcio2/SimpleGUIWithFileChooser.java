@@ -1,11 +1,28 @@
 package it.unibo.oop.lab.mvcio2;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import it.unibo.oop.lab.mvcio.Controller;
+
 /**
  * A very simple program using a graphical interface.
  * 
  */
 public final class SimpleGUIWithFileChooser {
-
+    private final String TITLE = "SIMPLEGUI WITH FILECHOOSER";
+    JFrame frame = new JFrame(TITLE);
     /*
      * TODO: Starting from the application in mvcio:
      * 
@@ -31,5 +48,70 @@ public final class SimpleGUIWithFileChooser {
      * update the UI: in this example the UI knows when should be updated, so
      * try to keep things separated.
      */
-
+    public SimpleGUIWithFileChooser() {
+        final JPanel canvas1 = new JPanel();
+        canvas1.setLayout(new BorderLayout());
+        final JPanel canvas = new JPanel();
+        canvas.setLayout(new BorderLayout());
+        
+        final JTextArea textArea = new JTextArea();
+        final JButton btnSave = new JButton("save");
+        final JButton btnBrowse = new JButton("browse...");
+        final JTextField textField = new JTextField("percorso...");
+      
+        canvas1.add(textField, BorderLayout.CENTER);
+        canvas1.add(btnBrowse, BorderLayout.LINE_END);
+        canvas.add(canvas1, BorderLayout.NORTH);
+        canvas.add(textArea, BorderLayout.CENTER);
+        canvas.add(btnSave, BorderLayout.SOUTH);
+        
+        
+        
+        
+        
+        
+        
+        
+        btnSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+                final Controller controller = new Controller(); 
+                try {
+                    controller.writeOnFile(textArea.getText());
+                    JOptionPane.showMessageDialog(frame, "salvato");
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(frame, e, "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } 
+        });
+        
+        
+        /*
+         * Make the frame half the resolution of the screen. This very method is
+         * enough for a single screen setup. In case of multiple monitors, the
+         * primary is selected.
+         * 
+         * In order to deal coherently with multimonitor setups, other
+         * facilities exist (see the Java documentation about this issue). It is
+         * MUCH better than manually specify the size of a window in pixel: it
+         * takes into account the current resolution.
+         */
+        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        final int sw = (int) screen.getWidth();
+        final int sh = (int) screen.getHeight();
+        frame.setSize(sw / 2, sh / 2);
+        /*
+         * Instead of appearing at (0,0), upper left corner of the screen, this
+         * flag makes the OS window manager take care of the default positioning
+         * on screen. Results may vary, but it is generally the best choice.
+         */
+        frame.setContentPane(canvas);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationByPlatform(true);
+        frame.setVisible(true);
+    }
+    
+    public static void main(String... args) {
+        new SimpleGUIWithFileChooser();
+    }
 }
