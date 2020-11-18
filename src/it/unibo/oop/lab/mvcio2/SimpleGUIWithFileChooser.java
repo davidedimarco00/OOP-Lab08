@@ -50,28 +50,20 @@ public final class SimpleGUIWithFileChooser {
      */
     public SimpleGUIWithFileChooser() {
         final JPanel canvas1 = new JPanel();
-        canvas1.setLayout(new BorderLayout());
         final JPanel canvas = new JPanel();
-        canvas.setLayout(new BorderLayout());
-        
         final JTextArea textArea = new JTextArea();
         final JButton btnSave = new JButton("save");
         final JButton btnBrowse = new JButton("browse...");
         final JTextField textField = new JTextField("percorso...");
-      
+        textField.setEditable(false);
+        canvas1.setLayout(new BorderLayout());
+        canvas.setLayout(new BorderLayout());
         canvas1.add(textField, BorderLayout.CENTER);
         canvas1.add(btnBrowse, BorderLayout.LINE_END);
         canvas.add(canvas1, BorderLayout.NORTH);
         canvas.add(textArea, BorderLayout.CENTER);
         canvas.add(btnSave, BorderLayout.SOUTH);
-        
-        
-        
-        
-        
-        
-        
-        
+
         btnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent arg0) {
@@ -84,8 +76,7 @@ public final class SimpleGUIWithFileChooser {
                 }
             } 
         });
-        
-        
+
         /*
          * Make the frame half the resolution of the screen. This very method is
          * enough for a single screen setup. In case of multiple monitors, the
