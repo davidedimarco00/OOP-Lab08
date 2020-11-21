@@ -1,17 +1,25 @@
 package it.unibo.oop.lab.mvc;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  * A very simple program using a graphical interface.
  * 
  */
 public final class SimpleGUI {
-
-    private final JFrame frame = new JFrame();
+    private static final String TITLE = "Standard output GUI";
+    private final JFrame frame = new JFrame(TITLE);
 
     /*
      * Once the Controller is done, implement this class in such a way that:
@@ -37,7 +45,48 @@ public final class SimpleGUI {
     /**
      * builds a new {@link SimpleGUI}.
      */
-    public SimpleGUI() {
+
+    /**
+     * 
+     * @param controller
+     */
+    public SimpleGUI(final Controller controller) {
+        final JPanel canvas = new JPanel();
+        final JPanel btnCanvas = new JPanel();
+        final JTextField textField = new JTextField();
+        final JTextArea textArea = new JTextArea();
+        final JButton btnPrint = new JButton();
+        final JButton btnHistory = new JButton();
+        textArea.setEditable(false);
+        btnPrint.setText("Print");
+        btnHistory.setText("HIstory");
+
+        canvas.setLayout(new BorderLayout());
+        btnCanvas.setLayout(new BorderLayout());
+        canvas.add(textField, BorderLayout.NORTH);
+        canvas.add(textArea, BorderLayout.CENTER);
+        canvas.add(btnCanvas, BorderLayout.SOUTH);
+        btnCanvas.add(btnPrint, BorderLayout.EAST);
+        btnCanvas.add(btnHistory, BorderLayout.WEST);
+        btnHistory.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+                final List<String> strings = controller.getStringsList();
+                for (final String string: strings) {
+                    textArea.append(string + "\n");
+                }
+            }
+        });
+
+        btnPrint.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+                    controller.setStringToPrint(textField.getText());
+                    controller.printCurrentString();
+            }
+        });
 
         /*
          * Make the frame half the resolution of the screen. This very method is
@@ -59,7 +108,14 @@ public final class SimpleGUI {
          * flag makes the OS window manager take care of the default positioning
          * on screen. Results may vary, but it is generally the best choice.
          */
+        frame.setContentPane(canvas);
         frame.setLocationByPlatform(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+
+    public static void main(final String... args) {
+        new SimpleGUI(new OutputController());
     }
 
 }
