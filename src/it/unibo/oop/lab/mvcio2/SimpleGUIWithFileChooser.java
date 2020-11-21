@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,8 +22,8 @@ import it.unibo.oop.lab.mvcio.Controller;
  * 
  */
 public final class SimpleGUIWithFileChooser {
-    private final String TITLE = "SIMPLEGUI WITH FILECHOOSER";
-    JFrame frame = new JFrame(TITLE);
+    private static final String TITLE = "SIMPLEGUI WITH FILECHOOSER";
+    private final JFrame frame = new JFrame(TITLE);
     /*
      * TODO: Starting from the application in mvcio:
      * 
@@ -48,13 +49,13 @@ public final class SimpleGUIWithFileChooser {
      * update the UI: in this example the UI knows when should be updated, so
      * try to keep things separated.
      */
-    public SimpleGUIWithFileChooser() {
+    public SimpleGUIWithFileChooser(final Controller controller) {
         final JPanel canvas1 = new JPanel();
         final JPanel canvas = new JPanel();
         final JTextArea textArea = new JTextArea();
         final JButton btnSave = new JButton("save");
         final JButton btnBrowse = new JButton("browse...");
-        final JTextField textField = new JTextField("percorso...");
+        final JTextField textField = new JTextField(controller.getDirFile()); //default
         textField.setEditable(false);
         canvas1.setLayout(new BorderLayout());
         canvas.setLayout(new BorderLayout());
@@ -63,11 +64,9 @@ public final class SimpleGUIWithFileChooser {
         canvas.add(canvas1, BorderLayout.NORTH);
         canvas.add(textArea, BorderLayout.CENTER);
         canvas.add(btnSave, BorderLayout.SOUTH);
-
         btnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent arg0) {
-                final Controller controller = new Controller(); 
                 try {
                     controller.writeOnFile(textArea.getText());
                     JOptionPane.showMessageDialog(frame, "salvato");
@@ -76,7 +75,22 @@ public final class SimpleGUIWithFileChooser {
                 }
             } 
         });
-
+        btnBrowse.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent arg0) {
+               final JFileChooser fileChooser = new JFileChooser();
+               final int result = fileChooser.showSaveDialog(canvas);
+               if (result == JFileChooser.APPROVE_OPTION) {
+                   controller.setCurrentFile(fileChooser.getSelectedFile());
+                   textField.setText(controller.getDirFile());
+               }
+               else {
+                   if (result != JFileChooser.CANCEL_OPTION) {
+                       JOptionPane.showMessageDialog(frame, result, "Error", JOptionPane.ERROR_MESSAGE);
+                   } 
+               }
+            } 
+        });
         /*
          * Make the frame half the resolution of the screen. This very method is
          * enough for a single screen setup. In case of multiple monitors, the
@@ -101,8 +115,8 @@ public final class SimpleGUIWithFileChooser {
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
     }
-    
-    public static void main(String... args) {
-        new SimpleGUIWithFileChooser();
+
+    public static void main(final String... args) {
+        new SimpleGUIWithFileChooser(new Controller()); 
     }
 }
