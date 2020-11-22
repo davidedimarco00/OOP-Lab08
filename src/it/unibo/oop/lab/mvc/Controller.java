@@ -26,9 +26,25 @@ public interface Controller {
      * an IllegalStateException should be thrown
      * 
      */
-
+    /**
+     * @param nextString next string to print
+     */
     void setStringToPrint(String nextString);
+
+    /**
+     * 
+     * @return string to print
+     */
     String getStringToPrint();
+
+    /**
+     * 
+     * @return history strings list
+     */
     List<String> getStringsList();
+
+    /**
+     * print the current string.
+     */
     void printCurrentString();
 }
